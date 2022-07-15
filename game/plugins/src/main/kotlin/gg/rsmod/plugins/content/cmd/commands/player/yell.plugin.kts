@@ -1,24 +1,32 @@
-import gg.rsmod.game.model.priv.Privilege
+/**
+ * @author Fritz <frikkipafi@gmail.com>
+ */
 
 on_command("yell") {
 
     val rank: String
+    val color: String
 
-    if (player.privilege.id.equals(1))
-        rank = "Donator"
-    else if (player.privilege.id.equals(2))
-        rank = "Admin"
-    else if (player.privilege.id.equals(3))
-        rank = "Developer"
-    else if (player.username.equals("fritz", ignoreCase = true))
-        rank = "Owner"
-    else
-        rank = "Player"
+    when (player.privilege.id) {
+        0 -> { rank = "Player"
+               color = ""}
+        1 -> { rank = "Donator"
+               color = "<shad=16711680>"}
+        2 -> { rank = "Admin"
+               color = "<shad=65280>"}
+        3 -> { rank = "Developer"
+               color = "<shad=53247>"}
+        4 -> { rank = "Owner"
+               color = "<shad=16777215>"}
+
+    else -> { rank = "unidendified"
+              color = ""}
+    }
 
     val args = player.getCommandArgs()
     val name = player.username
-    val text = args[0].toString()
-    player.message("[${rank}]${name}:${text}", ChatMessageType.ENGINE)
+    val text = args[0]
+    player.message("${color}[${rank}]${name}:${text}", ChatMessageType.ENGINE)
 
 }
 
